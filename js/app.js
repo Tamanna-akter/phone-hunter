@@ -1,55 +1,46 @@
-// document.getElementById("error-message").style.display = "none";
-document.getElementById("error-message1").style.display = "none";
-document.getElementById("error-message2").style.display = "none";
-//toggleSpinner function
+// Display Spinner
 const toggleSpinner = displayStyle => {
     document.getElementById("spinner").style.display = displayStyle;
 }
-//displayError function
-// const displayError = () => {
-//     document.getElementById("error-message").style.display = "block";
-// }
-// toggleSearchResult function
+// Display search result
 const toggleSearchResult = displayStyle => {
     document.getElementById("display-result").style.display = displayStyle;
 }
-// togglePhoneDetails function
+// Display Phone Details function
 const togglePhoneDetails = displayStyle => {
     document.getElementById("phone-details").style.display = displayStyle;
 }
-//searchPhone function
+document.getElementById("error-message1").style.display = "none";
+document.getElementById("error-message2").style.display = "none";
+//search the phone
 const searchPhone = async () => {
     const searchField = document.getElementById("search-field");
     const searchText = searchField.value;
-    // const lowerSearchText = searchText.toLowerCase();
-    //clear field
+    //clear search field
     searchField.value = "";
     if (searchText == "") {
-        document.getElementById("search-result").textContent = "";
-        document.getElementById("phone-details").textContent = "";
-        // document.getElementById("error-message").style.display = "none";
+
         document.getElementById("error-message2").style.display = "none";
         document.getElementById("error-message1").style.display = "block";
+        document.getElementById("search-result").textContent = "";
+        document.getElementById("phone-details").textContent = "";
         toggleSpinner("none");
     }
     else {
-        // document.getElementById("error-message").style.display = "none";
-        document.getElementById("error-message1").style.display = "none";
-        document.getElementById("error-message2").style.display = "none";
         toggleSpinner("block");
         toggleSearchResult("none");
         togglePhoneDetails("none");
-        //load data
+        document.getElementById("error-message1").style.display = "none";
+        document.getElementById("error-message2").style.display = "none";
+
+        //loading the data
         url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
         try {
-            const response = await fetch(url);
-            const data = await response.json();
-            //console.log(data.data.length);
+            const res = await fetch(url);
+            const data = await res.json();
             displaySearchResult(data.data);
         }
         catch (error) {
-            // console.log(error);
-            // displayError();
             toggleSearchResult(none);
             togglePhoneDetails(none);
         }
@@ -72,80 +63,28 @@ const displaySearchResult = phones => {
                 const div = document.createElement("div");
                 div.classList.add("col");
                 div.innerHTML = `
-                <div class="card h-100">
+                <div class="card h-100 border-success">
                     <img src="${phone.image}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h6 class="card-title font-weight-bold text-center">Title: ${phone.phone_name}</h6>
-                        <p>Brand: ${phone.brand}</p>
-                        <button onclick="phoneDetail('${phone.slug}')" type="button" class="btn btn-success w-100">Details</button>
+                        <h5 class="card-title text-center">Phone-Name: ${phone.phone_name}</h5>
+                        <h6 class="text-center"><span class="fw-bolder">Brand:</span> ${phone.brand}<//h6>
+                        <button onclick="phoneDetail('${phone.slug}')" type="button" class="btn btn-success w-100 mt-3">Details</button>
                     </div>
                 </div>
             `;
                 searchResult.appendChild(div);
             });
-            // const searchresultcontainer = document.getElementById("display-result");
-            // const buttonDiv = document.createElement("div");
-            // buttonDiv.classList.add("d-flex");
-            // buttonDiv.classList.add("justify-content-center");
-            // const showMorebutton = document.createElement("button");
-            // showMorebutton.classList.add("btn");
-            // showMorebutton.classList.add("btn-primary");
-            // showMorebutton.classList.add("my-3");
-            // showMorebutton.innerText = "Show More";
-            // buttonDiv.appendChild(showMorebutton);
-            // searchresultcontainer.appendChild(buttonDiv);
 
-            // showMorebutton.onclick = function () {
-            //     showMorebutton.style.display = "none";
-            //     const remainingItems = phones.slice(20);
-            //     remainingItems?.forEach(phone => {
-            //         const div = document.createElement("div");
-            //         div.classList.add("col");
-            //         div.innerHTML = `
-            //         <div class="card h-100">
-            //             <img src="${phone.image}" class="card-img-top" alt="...">
-            //             <div class="card-body">
-            //                 <h5 class="card-title">Title: ${phone.phone_name}</h5>
-            //                 <p>Brand: ${phone.brand}</p>
-            //                 <button onclick="loadPhoneDetail('${phone.slug}')" type="button" class="btn btn-primary">Show Details</button>
-            //             </div>
-            //         </div>
-            //     `;
-            //         searchResult.appendChild(div);
-            //     });
-            /* showLessbutton.style.display = "block";
-            showLessbutton.onclick = function () {
-
-            } */
-            // }
         }
-        // else {
-        //     document.getElementById("error-message2").style.display = "none";
-        //     phones?.forEach(phone => {
-        //         const div = document.createElement("div");
-        //         div.classList.add("col");
-        //         div.innerHTML = `
-        //         <div class="card h-100">
-        //             <img src="${phone.image}" class="card-img-top" alt="...">
-        //             <div class="card-body">
-        //                 <h5 class="card-title">Title: ${phone.phone_name}</h5>
-        //                 <p>Brand: ${phone.brand}</p>
-        //                 <button onclick="loadPhoneDetail('${phone.slug}')" type="button" class="btn btn-primary">Show Details</button>
-        //         </div>
-        //     </div>
-        //     `;
-        //         searchResult.appendChild(div);
-        //     });
-        // }
-    }
+    };
     toggleSpinner("none");
     toggleSearchResult("block");
 }
 //loadPhoneDetail function
-const phoneDetail = async phoneId => {
+const phoneDetail = async id => {
     //console.log(phoneId);
     // document.getElementById("error-message").style.display = "none";
-    const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`;
+    const url = `https://openapi.programming-hero.com/api/phone/${id}`;
 
     try {
         const res = await fetch(url);
@@ -166,33 +105,36 @@ const displayPhoneDetail = phone => {
     const phoneDetails = document.getElementById("phone-details");
     phoneDetails.textContent = "";
     const div = document.createElement("div");
-    div.classList.add("card");
+    // div.classList.add("card");
     // for (const key in phone.others) {
     //     //console.log(key);
     // }
     if (phone.others) {
-        const keys = Object.keys(phone.others);
+        // const keys = Object.keys(phone.others);
         div.innerHTML = `
+        <div class="card border-success">
         <div class="w-50 my-3 mx-auto">
             <img src="${phone.image}" class="card-img-top" alt="...">
         </div>
         <div class="card-body d-flex flex-column align-items-start">
-            <h5 class="card-title fw-bolder">Title: ${phone.name}</h5>
-            <p class="card-text"><span class="fw-bolder">Brand:</span> ${phone.brand}</p>
-            <p>Storage: ${phone.mainFeatures.storage}</p>
-            <p>Display Size: ${phone.mainFeatures.displaySize}</p>
-            <p>Chipset: ${phone.mainFeatures.chipSet}</p>
-            <p>Memory: ${phone.mainFeatures.memory}</p>
-            <p>Sensors: ${phone.mainFeatures.sensors}</p>
-            <p>Others:</p>
-            <p>${keys[0]}: ${phone.others[keys[0]]}</p>
-            <p>${keys[1]}: ${phone.others[keys[1]]}</p>
-            <p>${keys[2]}: ${phone.others[keys[2]]}</p>
-            <p>${keys[3]}: ${phone.others[keys[3]]}</p>
-            <p>${keys[4]}: ${phone.others[keys[4]]}</p>
+            <h5 class="card-title fw-bolder">Phone Name: ${phone.name}</h5>
+            <p class="card-text"><span class="fw-bolder">Brand: </span> ${phone.brand}</p>
+            <p class="card-text"><span class="fw-bolder">storage: </span> ${phone.mainFeatures.storage}</p>
+            <p class="card-text"><span class="fw-bolder">Display size: </span> ${phone.mainFeatures.displaySize}</p>
+            <p class="card-text"><span class="fw-bolder">chipset: </span> ${phone.mainFeatures.chipSet}</p>
+            <p class="card-text"><span class="fw-bolder">memory: </span> ${phone.mainFeatures.memory}</p>
+            <p class="card-text"><span class="fw-bolder">sensors: </span> ${phone.mainFeatures.sensors}</p>
+            <p class="card-text"><span class="fw-bolder">Release-date: </span> ${phone.releaseDate ? phone.releaseDate : "Not-found"}</p>
+            <h6 class="card-title text-center">Others Information</h6>
             
-            <p class="card-text">blutooth: ${phone.others.Bluetooth}</p>
-            <p>Release Date: ${phone.releaseDate ? phone.releaseDate : "No release date found"}</p>
+            <p class="card-text">GPS: ${phone.others.GPS}</p>
+            <p class="card-text">WLAN: ${phone.others.WLAN}</p>
+            <p class="card-text">NFC: ${phone.others.NFC}</p>
+            <p class="card-text">Radio: ${phone.others.Radio}</p>
+            <p class="card-text">USB: ${phone.others.USB}</p>
+            <p class="card-text">bluetooth: ${phone.others.Bluetooth}</p>
+           
+        </div>
         </div>
     `;
     }
@@ -200,20 +142,20 @@ const displayPhoneDetail = phone => {
 
     else {
         div.innerHTML = `
+        <div class="card border-success">
         <div class="w-50 my-3 mx-auto">
             <img src="${phone.image}" class="card-img-top" alt="...">
         </div>
-        <div class="card-body">
-            <h5 class="card-title">Title: ${phone.name}</h5>
-            <p>Brand: ${phone.brand}</p>
-            <p>Storage: ${phone.mainFeatures.storage}</p>
-            <p>Display Size: ${phone.mainFeatures.displaySize}</p>
-            <p>Chipset: ${phone.mainFeatures.chipSet}</p>
-            <p>Memory: ${phone.mainFeatures.memory}</p>
-            <p>Sensors: ${phone.mainFeatures.sensors}</p>
-            <p>Others: Not defined</p>
-            <p>Release Date: ${phone.releaseDate ? phone.releaseDate : "No release date found"}</p>
-        </div>
+        <div class="card-body d-flex flex-column align-items-start">
+            <h5 class="card-title fw-bolder">Phone Name: ${phone.name}</h5>
+            <p class="card-text"><span class="fw-bolder">Brand: </span> ${phone.brand}</p>
+            <p class="card-text"><span class="fw-bolder">storage: </span> ${phone.mainFeatures.storage}</p>
+            <p class="card-text"><span class="fw-bolder">Display size: </span> ${phone.mainFeatures.displaySize}</p>
+            <p class="card-text"><span class="fw-bolder">chipset: </span> ${phone.mainFeatures.chipSet}</p>
+            <p class="card-text"><span class="fw-bolder">memory: </span> ${phone.mainFeatures.memory}</p>
+            <p class="card-text"><span class="fw-bolder">sensors: </span> ${phone.mainFeatures.sensors}</p>
+            <p class="card-text"><span class="fw-bolder">Release-date: </span> ${phone.releaseDate ? phone.releaseDate : "Not-found"}</p>
+            <h6 class="card-title text-center">Others Information not found</h6>
     `;
     }
     phoneDetails.appendChild(div);
