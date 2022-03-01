@@ -63,7 +63,7 @@ const displaySearchResult = phones => {
                 div.classList.add("col");
                 div.innerHTML = `
                 <div class="card h-100 border-success">
-                    <img src="${phone.image}" class="card-img-top" alt="...">
+                    <img src="${phone.image}" class="card-img-top w-75 mt-4" alt="...">
                     <div class="card-body">
                         <h5 class="card-title text-center">Phone-Name: ${phone.phone_name}</h5>
                         <h6 class="text-center"><span class="fw-bolder">Brand:</span> ${phone.brand}<//h6>
@@ -94,6 +94,7 @@ const phoneDetail = async id => {
         togglePhoneDetails(none);
     }
 }
+//display phones information
 const displayPhoneDetail = phone => {
     const phoneDetails = document.getElementById("phone-details");
     phoneDetails.textContent = "";
@@ -102,7 +103,7 @@ const displayPhoneDetail = phone => {
         div.innerHTML = `
         <div class="card border-success">
         <div class="w-50 my-3 mx-auto">
-            <img src="${phone.image}" class="card-img-top" alt="...">
+            <img src="${phone.image}" class="card-img-top w-75" alt="...">
         </div>
         <div class="card-body d-flex flex-column align-items-start">
             <h5 class="card-title fw-bolder">Phone Name: ${phone.name}</h5>
@@ -131,7 +132,7 @@ const displayPhoneDetail = phone => {
         div.innerHTML = `
         <div class="card border-success">
         <div class="w-50 my-3 mx-auto">
-            <img src="${phone.image}" class="card-img-top" alt="...">
+            <img src="${phone.image}" class="card-img-top w-75" alt="...">
         </div>
         <div class="card-body d-flex flex-column align-items-start">
             <h5 class="card-title fw-bolder">Phone Name: ${phone.name}</h5>
