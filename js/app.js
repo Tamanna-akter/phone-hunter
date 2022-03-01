@@ -46,7 +46,7 @@ const searchPhone = async () => {
         }
     }
 }
-//displaySearchResult function
+// Search Result function
 const displaySearchResult = phones => {
     const searchResult = document.getElementById("search-result");
     searchResult.textContent = "";
@@ -57,7 +57,6 @@ const displaySearchResult = phones => {
     else {
         if (phones.length >= 20 || phones.length < 20) {
             const slicedPhones = phones.slice(0, 20);
-            //console.log(slicedItems);
             document.getElementById("error-message2").style.display = "none";
             slicedPhones?.forEach(phone => {
                 const div = document.createElement("div");
@@ -77,40 +76,29 @@ const displaySearchResult = phones => {
 
         }
     };
-    toggleSpinner("none");
     toggleSearchResult("block");
+    toggleSpinner("none");
+
 }
-//loadPhoneDetail function
+//display phone details
 const phoneDetail = async id => {
-    //console.log(phoneId);
-    // document.getElementById("error-message").style.display = "none";
     const url = `https://openapi.programming-hero.com/api/phone/${id}`;
 
     try {
         const res = await fetch(url);
         const data = await res.json();
-        //console.log(data.data);
         displayPhoneDetail(data.data);
     }
     catch (error) {
-        // console.log(error);
-        // displayError();
         toggleSearchResult(none);
         togglePhoneDetails(none);
     }
 }
-// displayPhoneDetail function
 const displayPhoneDetail = phone => {
-    // console.log(phone.others);
     const phoneDetails = document.getElementById("phone-details");
     phoneDetails.textContent = "";
     const div = document.createElement("div");
-    // div.classList.add("card");
-    // for (const key in phone.others) {
-    //     //console.log(key);
-    // }
     if (phone.others) {
-        // const keys = Object.keys(phone.others);
         div.innerHTML = `
         <div class="card border-success">
         <div class="w-50 my-3 mx-auto">
@@ -138,7 +126,6 @@ const displayPhoneDetail = phone => {
         </div>
     `;
     }
-    //console.log(otherskeys);
 
     else {
         div.innerHTML = `
